@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { collection, addDoc } from "firebase/firestore"; 
 import db from './firebase'
 const AddTask = ({onAdd}) => {
     const[text,setText]=useState('')
@@ -12,12 +11,8 @@ const AddTask = ({onAdd}) => {
           alert('Pliz add task')
           return
       }
-    //   const docRef = await addDoc(collection(db, "tasks"), {
-    //     text: tasks.text,
-    //     middle: tasks.day,
-    //    reminder:tasks.reminder
-    //   }
-    // ) 
+     
+    onAdd({text,day,reminder})
       setText('')
       setDay('')
       setReminder(false)

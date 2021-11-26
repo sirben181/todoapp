@@ -8,7 +8,10 @@ const Tasks = ({tasks,delTask,onToggle}) => {
                 <Task 
                 delTask={delTask}
                 onToggle={onToggle}
-                task={task}
+                text={task.data.text}
+                day={task.data.day}
+               task={task}
+
                  key={task.id}
                 />
             ))}
