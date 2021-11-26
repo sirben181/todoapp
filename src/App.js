@@ -2,37 +2,46 @@
 import './index.css';
 import Header from './components/Header';
 import Tasks from './components/Tasks';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { collection, getDocs } from "firebase/firestore"; 
+
 import AddTask from './components/AddTask'; 
-import {auth} from './components/firebase.js'
-import { collection, addDoc } from "firebase/firestore"; 
 import db from './components/firebase'
+
 import Login from './components/Login';
 
-const App=()=> {
+function App() {
   const[showAddTask,setShowAddTask]=useState(false)
   const [tasks,setTasks]=useState([])
+
+useEffect(async()=>{
+  const querySnapshot = await getDocs(collection(db, "tasks"));
+  setTasks(querySnapshot.docs.map(doc => ({
+    // console.log(`${doc.id} => ${doc.data()}`);
+  id:doc.id,
+  data:doc.data()
+   
+  })));
+  
+},[])
+  
+
   //adding task
   const addTask=(task)=>{
-   const id=Math.floor(Math.random()*10000)+1
-   const newTask={id,...task}
-   setTasks([...tasks,newTask])
+  //  const id=Math.floor(Math.random()*10000)+1
+  //  const newTask={id,...task}
+  //  setTasks([...tasks,newTask])
   
-    const docRef = await addDoc(collection(db, "tasks"), {
-      text:tasks.text,
-      day:tasks.day,
-      reminder:false
-    });
-  
-    console.log("Document written with ID: ", docRef.id);
-  
+   
+    
+  }
   //deleteTask
   const deleteTask=(id)=>{
-    setTasks(tasks.filter((task)=>task.id !==id))
+    // setTasks(tasks.filter((task)=>task.id !==id))
   }
   //toggle reminder
   const toggleReminder=(id)=>{
-    setTasks(tasks.map((task)=>task.id===id ? {...task, reminder: !task.reminder}:task))
+    // setTasks(tasks.map((task)=>task.id===id ? {...task, reminder: !task.reminder}:task))
   }
   const user=null
   
@@ -52,7 +61,7 @@ const App=()=> {
       )}
     
     </div>
-  )}
-
+  );
+}
 
 export default App;

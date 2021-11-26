@@ -1,15 +1,23 @@
 import React, { useState } from 'react'
+import { collection, addDoc } from "firebase/firestore"; 
+import db from './firebase'
 const AddTask = ({onAdd}) => {
     const[text,setText]=useState('')
     const[day,setDay]=useState('')
     const[reminder,setReminder]=useState(false)
-    const onSubmit=(e)=>{
+   
+    const onSubmit= async(e)=>{
       e.preventDefault();
       if(!text){
           alert('Pliz add task')
           return
       }
-     onAdd({text,day,reminder})
+    //   const docRef = await addDoc(collection(db, "tasks"), {
+    //     text: tasks.text,
+    //     middle: tasks.day,
+    //    reminder:tasks.reminder
+    //   }
+    // ) 
       setText('')
       setDay('')
       setReminder(false)
